@@ -95,8 +95,8 @@ export const sortByProperty = cache((arr, prop) => {
  */
 export const getSortedPosts = cache((posts) => {
   return posts.sort((a, b) => {
-    const dateA = a.date || a.sys.firstPublishedAt
-    const dateB = b.date || b.sys.firstPublishedAt
+    const dateA = a.date || a.sys.published_timestamp
+    const dateB = b.date || b.sys.published_timestamp
     return new Date(dateB) - new Date(dateA)
   })
 })
@@ -142,7 +142,7 @@ export const viewCountFormatter = new Intl.NumberFormat('nl-NL')
  */
 export const getItemsByYear = (items) => {
   return items.reduce((acc, item) => {
-    const year = new Date(item.date || item.sys.firstPublishedAt).getFullYear()
+    const year = new Date(item.date || item.sys.published_timestamp).getFullYear()
     const yearArr = acc.find((item) => item[0] === year)
     if (!yearArr) {
       acc.push([year, [item]])

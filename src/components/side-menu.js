@@ -7,7 +7,6 @@ import { useMemo } from 'react'
 
 import { LoadingSpinner } from '@/components/loading-spinner'
 import { ScrollArea } from '@/components/scroll-area'
-import { Button } from '@/components/ui/button'
 
 const SubmitBookmarkDialog = dynamic(
   () => import('@/components/submit-bookmark/dialog').then((mod) => mod.SubmitBookmarkDialog),
@@ -29,7 +28,7 @@ const keyCodePathnameMapping = {
   Digit6: '/bookmarks'
 }
 
-export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
+export const SideMenu = ({ children, title, isInner }) => {
   const router = useRouter()
   const pathname = usePathname()
   useKeyPress(onKeyPress, Object.keys(keyCodePathnameMapping))
@@ -39,8 +38,6 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
     const targetPathname = keyCodePathnameMapping[key]
     if (targetPathname && targetPathname !== pathname) router.push(targetPathname)
   }
-
-  const currentBookmark = bookmarks.find((bookmark) => `/bookmarks/${bookmark.slug}` === pathname)
 
   const memoizedScrollArea = useMemo(
     () => (
@@ -54,14 +51,13 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
           <div className="sticky top-0 z-10 border-b border-border-line px-5 py-3">
             <div className="flex items-center justify-between">
               <span className="text-sm font-semibold tracking-tight">{title}</span>
-
             </div>
           </div>
         )}
         <div className="p-3">{children}</div>
       </ScrollArea>
     ),
-    [isInner, title, bookmarks, currentBookmark, children]
+    [isInner, title, children]
   )
 
   return memoizedScrollArea

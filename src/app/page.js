@@ -7,21 +7,23 @@ import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { ScrollArea } from '@/components/scroll-area'
 import { Button } from '@/components/ui/button'
 import { WritingList } from '@/components/writing-list'
-import { getAllPosts } from '@/lib/contentful'
 import { getItemsByYear, getSortedPosts } from '@/lib/utils'
+import { GradientBg3 } from '@/components/gradient-bg'
+import { getArticles } from '@/lib/getArticles'
 
 async function fetchData() {
-  const allPosts = await getAllPosts()
-  const sortedPosts = getSortedPosts(allPosts)
-  const items = getItemsByYear(sortedPosts)
-  return { items }
+  const [allPosts, devArticles] = await Promise.all([
+    getArticles()
+  ])
+  return { allPosts, devArticles }
 }
 
 export default async function Home() {
-  const { items } = await fetchData()
+  const { allPosts, devArticles } = await fetchData()
 
   return (
     <ScrollArea useScrollAreaId>
+      <GradientBg3 />
       <FloatingHeader scrollTitle="Olaoluwa Glover" />
       <div className="content-wrapper">
         <div className="content">
@@ -43,7 +45,24 @@ export default async function Home() {
             </Link>
           </Button>
           <Suspense fallback={<ScreenLoadingSpinner />}>
-            <WritingList items={items} header="Writing" />
+            <WritingList items={allPosts} header="Writing" />
+            {devArticles?.length > 0 && (
+              <div className="mt-8">
+                <div className="space-y-4">
+                  {devArticles.map((article) => (
+                    <Link
+                      key={article.id}
+                      href={article.url}
+                      target="_blank"
+                      className="block hover:opacity-70"
+                    >
+                      <h4>{article.title}</h4>
+                      <p className="text-sm text-gray-500">{article.description}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </Suspense>
         </div>
       </div>

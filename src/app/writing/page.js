@@ -4,35 +4,29 @@ import { FloatingHeader } from '@/components/floating-header'
 import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { ScrollArea } from '@/components/scroll-area'
 import { WritingListLayout } from '@/components/writing/writing-list-layout'
-import { getAllPosts, getPageSeo } from '@/lib/contentful'
-import { getSortedPosts } from '@/lib/utils'
+import { getArticles } from '@/lib/getArticles'
 
 async function fetchData() {
-  const allPosts = await getAllPosts()
-  const sortedPosts = getSortedPosts(allPosts)
-  return { sortedPosts }
+  const articles = await getArticles()
+  return { articles }
 }
 
 export default async function Writing() {
-  const { sortedPosts } = await fetchData()
+  const { articles } = await fetchData()
 
   return (
     <ScrollArea className="lg:hidden">
       <FloatingHeader title="Writing" />
       <Suspense fallback={<ScreenLoadingSpinner />}>
-        <WritingListLayout list={sortedPosts} isMobile />
+        <WritingListLayout list={articles} isMobile />
       </Suspense>
     </ScrollArea>
   )
 }
 
-export async function generateMetadata() {
-  const seoData = await getPageSeo('writing')
-  if (!seoData) return null
-
-  const {
-    seo: { title, description }
-  } = seoData
+export function generateMetadata() {
+  const title = 'Writing - Olaoluwa Glover'
+  const description = 'Articles and thoughts on software development, design, and technology.'
   const siteUrl = '/writing'
 
   return {

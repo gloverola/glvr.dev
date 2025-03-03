@@ -10,7 +10,19 @@ const nextConfig = {
   trailingSlash: false,
   images: {
     deviceSizes: [390, 435, 768, 1024, 1280],
-    formats: ['image/avif']
+    formats: ['image/avif'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'media2.dev.to',
+        pathname: '/dynamic/image/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'dev-to-uploads.s3.amazonaws.com',
+        pathname: '/uploads/**'
+      }
+    ]
   },
   async redirects() {
     return [
