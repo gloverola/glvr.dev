@@ -11,6 +11,9 @@ import { getAllLogbook, getPageSeo } from '@/lib/contentful'
 async function fetchData() {
   const allLogbook = await getAllLogbook()
 
+  console.log(allLogbook);
+
+
   const mappedLogbook = []
   allLogbook.map((log) => {
     const year = new Date(log.date).getFullYear()
@@ -42,11 +45,11 @@ export default async function Journey() {
                       <div key={`data_${itemIndex}_log_${logIndex}`} className="relative flex pb-8 last:pb-0">
                         {logIndex !== item.logs.length - 1 && (
                           <div className="absolute inset-0 flex w-5 items-center justify-center">
-                            <div className="pointer-events-none h-full w-px border-l border-dashed border-gray-200"></div>
+                            <div className="pointer-events-none h-full w-px border-l border-dashed border-accent"></div>
                           </div>
                         )}
                         <div className="z-0 grid size-5 shrink-0 place-items-center rounded-full border bg-white text-white shadow-xs">
-                          <div className="size-2 rounded-full bg-blue-600" />
+                          <div className="size-2 rounded-full bg-accent" />
                         </div>
                         <div className="grow pl-4 lg:pl-8">
                           <JourneyCard {...log} index={logIndex} />

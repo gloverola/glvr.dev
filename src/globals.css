@@ -12,13 +12,13 @@
   --sh-string: hsl(138.58deg 77.94% 27.65%);
   --sh-keyword: rgb(215, 58, 73);
   --sh-comment: #a19595;
-  --color-primary: #F1F0EA;
+  --color-primary: #F3F0E9;
   --color-secondary: #222223;
   --color-accent: #9B6472;
-  --color-accent-foreground: #E2DED0;
+  --color-accent-foreground: #F2F1F0;
   --color-shadow: #F5F5F5;
   --color-tertiary: #7C7C74;
-  --color-border-line: #C0C0C0;
+  --color-border-line: #E0E0E0;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
